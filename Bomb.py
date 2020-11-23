@@ -22,8 +22,6 @@ class Bomb():
 			self.color = 'blue'
 		if self.name_of_creater == 'bot':
 			self.color = 'red'
-		self.x = event.x
-		self.y = event.y
 		 
 
 	def delete(self, x_player, y_player, name):
@@ -35,8 +33,8 @@ class Bomb():
 
 		 # Щелчок находится в круге, еcли растояние до центра меньше радиуса этого круга 
 
-		if self.name_of_creater != name :
-			if (x_player - self.x)**2 + (y_player - self.y)**2 < self.r**2 :
+		if self.name_of_creater != name:
+			if (x_player - self.x) ** 2 + (y_player - self.y) ** 2 < self.r ** 2 :
 				self.x = -10
 				self.y = -10
 
@@ -53,5 +51,3 @@ class Bomb():
 		life_of_field -= 10
 
 		return life_of_field
-		
-
