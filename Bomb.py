@@ -22,16 +22,18 @@ class Bomb():
 			self.color = 'blue'
 		if self.name_of_creater == 'bot':
 			self.color = 'red'
+		self.x = event.x
+		self.y = event.y
 		 
 
-	def delete(self, x_player, y_player, name  ):
+	def delete(self, x_player, y_player, name):
 		"""
 		Меняем текущие координаты бомбы на (-10, -10), тем самым бомба перемещается за холст
 		x_player, y_player - координаты щелчка игрока 
 		name - имя игрока унижтожающего цели, если совпадает self.name, то бомба не унижтожается 
 		"""
 
-		 # Щелчок находиться в круге, еcли растояние до центра меньше радиуса этого круга 
+		 # Щелчок находится в круге, еcли растояние до центра меньше радиуса этого круга 
 
 		if self.name_of_creater != name :
 			if (x_player - self.x)**2 + (y_player - self.y)**2 < self.r**2 :
