@@ -37,6 +37,21 @@ def draw():
     for i in range(math.floor(width/10)):
         for j in range(math.floor(height/10)):
             rad_dot(10*i, 10*j)
+    for i in range(bomb_count):
+        draw_bomb(i)
+
+    bomb_del = 0
+    for i in range(bomb_count):
+        boom_check(i)
+    for i in range(bomb_del):
+        del bomb_x[0]
+        del bomb_y[0]
+        del bomb_time[0]
+        bomb_count -= 1
+
+    if (time % 30 == 0):
+        bomb(time % 800, time % 600)
+        bomb(time % 800 + 50, time % 600)
 
     #Чтобы разметка полей была над радиацией, но под бомбочками
     draw_field_lines(screen)
