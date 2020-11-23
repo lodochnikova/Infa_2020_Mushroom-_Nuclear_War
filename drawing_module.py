@@ -119,7 +119,7 @@ draw()
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
-test = (0, 128, 0)
+#test = (0, 128, 0)
 while not finished:
     clock.tick(FPS)
     time += 1
