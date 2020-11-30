@@ -1,29 +1,30 @@
 import pygame 
 
 class Bomb():
-	def __init__(self, x: int, y: int, id_creater):
+	def __init__(self, x: int, y: int, name: str):
 		"""
 		param: x, y - координата начала падение бомбы
 		param: r - начальный радиус бомбы 
 		param: time_of_life - убывает после каждого вызова функции drop_the_bomb()
 		param: name - имя игрока, создающий бомбу, два варианта: bot and player 
 		"""
-		self.creater = id_creater
+		self.name_of_creater = name
 		self.time_of_life = 200 
 		self.x = x
 		self.y = y
 		self.r = 5
 		self.color = 'black'
-		#self.create_bomb()
+		self.create_bomb()
 
-	#def create_bomb(self):
+	def create_bomb(self):
 
-		#if self.creater.is_bot : # он всегда false для player, он выполянется для бота 
-			#self.color = 'blue'
-		#else:
-			#self.color = 'red'
-			
-	def delete(self, x_click, y_click, id_creater):
+		if self.name_of_creater == 'player':
+			self.color = 'blue'
+		if self.name_of_creater == 'bot':
+			self.color = 'red'
+		 
+
+	def delete(self, x_player, y_player, name):
 		"""
 		Меняем текущие координаты бомбы на (-10, -10), тем самым бомба перемещается за холст
 		x_player, y_player - координаты щелчка игрока 
@@ -32,8 +33,8 @@ class Bomb():
 
 		 # Щелчок находится в круге, еcли растояние до центра меньше радиуса этого круга 
 
-		if self.creater is not id_creater :# разные ссылки на  разные объекты creater
-			if (x_click - self.x) ** 2 + (y_click - self.y) ** 2 < self.r ** 2 :
+		if self.name_of_creater != name:
+			if (x_player - self.x) ** 2 + (y_player - self.y) ** 2 < self.r ** 2 :
 				self.x = -10
 				self.y = -10
 
