@@ -18,6 +18,8 @@ from pygame.draw import *
 from field import *
 from CONST import *
 from Bomb import *
+
+screen = pygame.display.set_mode((width, height))
 time = 0
 
 damage = []
@@ -25,16 +27,17 @@ for i in range(width):
     damage.append([])
     for j in range(height):
         damage[i].append((i+j)/(width+height))
-bomb_time = []
-bomb_x = []
-bomb_y = []
+#bomb_time = []
+#bomb_x = []
+#bomb_y = []
 bomb_count = 0
 bomb_del = 0
 
-def draw():
-    #global width, height, time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
-    global time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
 
+def draw(t):
+    #global width, height, time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
+    global time, bomb_del,  bomb_count # bomb_x, bomb_y, bomb_time,
+    time = t 
 
     for i in range(math.floor(width/10)):
         for j in range(math.floor(height/10)):
@@ -46,7 +49,7 @@ def draw():
     for i in range(bomb_count):
         boom_check(i)
     for i in range(bomb_del):
-        del bomb_x[0]
+        del bomb_x[0] # 
         del bomb_y[0]
         del bomb_time[0]
         bomb_count -= 1
@@ -110,9 +113,11 @@ def bomb_color(t):
 
 def draw_bomb(bomb):
     global bomb_time, bomb_x, bomb_y, bomb_count, boom
-    dt = time - bomb_time[i]
+    #dt = time - bomb_time[i]
     #x = bomb_x[i]
     #y = bomb_y[i]
+    dt = time - bomb.t
+
     x = bomb.x
     y = bomb.y
 
@@ -123,32 +128,9 @@ def draw_bomb(bomb):
     if (dt >= boom):
         circle (screen, (255, 255, 0), (x, y), blast_radius, 0)
 
-def boom_check(i):
+def boom_check(bomb):
     global bomb_time, time, boom, bomb_del
-    if (time - bomb_time[i] >= boom):
+    if (time - bomb.t >= boom):
         bomb_del += 1
 
 
-pygame.init()
-FPS = 30
-screen = pygame.display.set_mode((width, height))
-
-draw()
-pygame.display.update()
-clock = pygame.time.Clock()
-finished = False
-#test = (0, 128, 0)
-while not finished:
-    clock.tick(FPS)
-    time += 1
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-
-    draw()
-    #draw_field_lines(screen)
-    pygame.display.update()
-    #screen.fill(test)
-    draw_field(screen)
-
-pygame.quit()

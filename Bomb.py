@@ -1,7 +1,7 @@
 import pygame 
 
 class Bomb():
-	def __init__(self, x: int, y: int, id_creater):
+	def __init__(self, x: int, y: int, id_creater, t):
 		"""
 		param: x, y - координата начала падение бомбы
 		param: r - начальный радиус бомбы 
@@ -14,6 +14,7 @@ class Bomb():
 		self.y = y
 		self.r = 5
 		self.color = 'black'
+		self.t = t  # время созжания бомбы
 		#self.create_bomb()
 
 	#def create_bomb(self):
@@ -22,7 +23,7 @@ class Bomb():
 			#self.color = 'blue'
 		#else:
 			#self.color = 'red'
-			
+
 	def delete(self, x_click, y_click, id_creater):
 		"""
 		Меняем текущие координаты бомбы на (-10, -10), тем самым бомба перемещается за холст
