@@ -1,9 +1,14 @@
+from Bomb import *
+
+
 class player():
     def __init__(self, name):
         self.name = name
+        self.is_bot = False
         
     def bomb(self, x, y):
-        Bomb(x, y, self.name)
+        return Bomb(x, y, self)
+
 
     def catch(self, x, y):
         bomb = find_bomb()

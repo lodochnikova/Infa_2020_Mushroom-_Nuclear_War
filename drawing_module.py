@@ -17,7 +17,7 @@ import random
 from pygame.draw import *
 from field import *
 from CONST import *
-
+from Bomb import *
 time = 0
 
 damage = []
@@ -108,11 +108,14 @@ def bomb_color(t):
     c = (r, 0, 0)
     return c
 
-def draw_bomb(i):
+def draw_bomb(bomb):
     global bomb_time, bomb_x, bomb_y, bomb_count, boom
     dt = time - bomb_time[i]
-    x = bomb_x[i]
-    y = bomb_y[i]
+    #x = bomb_x[i]
+    #y = bomb_y[i]
+    x = bomb.x
+    y = bomb.y
+
     color = bomb_color(dt)
     radius = 8
     blast_radius = 20
