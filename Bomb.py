@@ -1,4 +1,6 @@
 import pygame 
+from drawing_module import del_bomb
+
 
 class Bomb():
 	def __init__(self, x: int, y: int, name: str):
@@ -37,7 +39,7 @@ class Bomb():
 			if (x_player - self.x) ** 2 + (y_player - self.y) ** 2 < self.r ** 2 :
 				self.x = -10
 				self.y = -10
-
+				del_bomb(self.x, self.y )
 
 	def drop_the_bomb(self):
 		

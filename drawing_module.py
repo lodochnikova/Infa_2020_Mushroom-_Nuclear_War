@@ -19,7 +19,7 @@ from field import *
 from CONST import *
 
 time = 0
-
+screen = pygame.display.set_mode((width, height))
 damage = []
 for i in range(width):
     damage.append([])
@@ -31,10 +31,10 @@ bomb_y = []
 bomb_count = 0
 bomb_del = 0
 
-def draw():
+def draw(t):
     #global width, height, time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
     global time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
-
+    time = t
 
     for i in range(math.floor(width/10)):
         for j in range(math.floor(height/10)):
@@ -51,11 +51,7 @@ def draw():
         del bomb_time[0]
         bomb_count -= 1
 
-    if (time % 30 == 0):
-        bomb(time % 800, time % 600)
-        bomb(time % 800 + 50, time % 600)
-    if (time % 60 == 20):
-        del_bomb((time + 780) % 800, (time + 580) % 600)
+    
 
 
     #Чтобы разметка полей была над радиацией, но под бомбочками
@@ -83,7 +79,7 @@ def rad_dot(x, y):
         Radius =  math.floor(2 + math.sin(time2/30))
         circle (screen, (r, g, b), (x, y), Radius, 0)
 
-def bomb(x, y):
+def dr_bomb(x, y):
     global bomb_time, bomb_x, bomb_y, bomb_count, time
     bomb_x.append(x)
     bomb_y.append(y)
@@ -126,26 +122,3 @@ def boom_check(i):
         bomb_del += 1
 
 
-pygame.init()
-FPS = 30
-screen = pygame.display.set_mode((width, height))
-
-draw()
-pygame.display.update()
-clock = pygame.time.Clock()
-finished = False
-#test = (0, 128, 0)
-while not finished:
-    clock.tick(FPS)
-    time += 1
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-
-    draw()
-    #draw_field_lines(screen)
-    pygame.display.update()
-    #screen.fill(test)
-    draw_field(screen)
-
-pygame.quit()

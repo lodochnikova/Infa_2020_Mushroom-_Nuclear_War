@@ -24,7 +24,7 @@ def draw_field_lines(screen, n = N, SCREEN_X = width, SCREEN_Y = height):
 		line = pygame.draw.line(screen, WHITE, (0, temp), (SCREEN_X, temp), LINES_WIDTH)
 		temp += field_height
 
-def what_field_is(x, y):
+def what_field_is(x, y, SCREEN_X = width,  SCREEN_Y = height):
 	player_number = 1
 	if x > SCREEN_X / 2:
 		player_number = N // 2 + 1

@@ -1,7 +1,7 @@
 #global:
 width = 800
 height = 600
-N = 20
+N = 2
 FPS = 30
 
 #drawing_module:
