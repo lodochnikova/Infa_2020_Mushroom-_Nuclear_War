@@ -8,6 +8,9 @@
 # Вызывать взрыв бомбы для отрисовки отдельно не нужно
 # Однако массив damage здесь не обновляется
 # Для визуализации задан вызов бомб каждые 50 кадров
+
+# Для удаления бомбы с координатами x, y вызвать функцию del_bomb(x, y)
+# Если таких несколько, удаляется только самая старая
 import pygame
 import math
 import random
@@ -32,7 +35,7 @@ def draw():
     #global width, height, time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
     global time, bomb_del, bomb_x, bomb_y, bomb_time, bomb_count
 
-    print (time)
+
     for i in range(math.floor(width/10)):
         for j in range(math.floor(height/10)):
             rad_dot(10*i, 10*j)
@@ -51,6 +54,9 @@ def draw():
     if (time % 30 == 0):
         bomb(time % 800, time % 600)
         bomb(time % 800 + 50, time % 600)
+    if (time % 60 == 20):
+        del_bomb((time + 780) % 800, (time + 580) % 600)
+
 
     #Чтобы разметка полей была над радиацией, но под бомбочками
     draw_field_lines(screen)
@@ -66,10 +72,6 @@ def draw():
         del bomb_y[0]
         del bomb_time[0]
         bomb_count -= 1
-
-    if (time % 30 == 0):
-        bomb(time % 800, time % 600)
-        bomb(time % 800 + 50, time % 600)
 
 def rad_dot(x, y):
     global damage, time
@@ -87,6 +89,19 @@ def bomb(x, y):
     bomb_y.append(y)
     bomb_time.append(time)
     bomb_count += 1
+
+def del_bomb(x, y):
+    global bomb_time, bomb_x, bomb_y, bomb_count, time
+    k = 0.5
+    for i in range(bomb_count):
+        if (bomb_x[i]==x):
+            if (bomb_y[i]==y):
+                k = i
+                break
+    del bomb_x[k]
+    del bomb_y[k]
+    del bomb_time[k]
+    bomb_count -= 1
 
 def bomb_color(t):
     r = int(t/boom * 255)
