@@ -129,11 +129,11 @@ while not finished:
         hpb = Health_Points_Bot()
         print(hp, hpb)
         if (hp < 0.4):
-            Bot_Win()
+            Bot_Win(screen)
             finished = True
 
         if (hpb < 0.4):
-            Player_Win()
+            Player_Win(screen)
             finished = True
 
         bot_act(time)
