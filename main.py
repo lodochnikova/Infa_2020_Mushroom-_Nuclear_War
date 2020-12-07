@@ -17,7 +17,7 @@ from bot import bot_act
 from Ending import Bot_Win, Player_Win
 
 
-
+import pygame
 pygame.init()
 FPS = 30
 screen = pygame.display.set_mode((width, height))
@@ -36,11 +36,11 @@ while not finished:
     hpb = Health_Points_Bot()
     print(hp, hpb)
     if (hp < 0.4):
-        Bot_Win()
+        Bot_Win(screen)
         finished = True
 
     if (hpb < 0.4):
-        Player_Win()
+        Player_Win(screen)
         finished = True
 
     bot_act(time)
