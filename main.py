@@ -1,7 +1,19 @@
+"""
+f(x, y) = k
+бомба
+R = const, r - расстояние до эпицентра
+f(x, y) = k + (1-k) * (R/(r+R))
+
+Если k = 0, то станет 0.5
+Если k = 1 то не изменится
+"""
+
+
+
 import pygame
-from drawing_module import dr_bomb, draw
-from CONST import *
+from drawing_module import dr_bomb, draw, del_bomb, repair
 from field import *
+from bot import bot_act
 
 
 
@@ -18,32 +30,29 @@ finished = False
 while not finished:
     clock.tick(FPS)
     time += 1
+    bot_act(time)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             finished = True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
-            if what_field_is(x, y) == 1:
-                player_name = 'player'
-                player_name = player()
+            if what_field_is(x, y) == 2:
+                #player_name = 'player'
+                #player_name = player()
                 dr_bomb(x,y)
             else:
-                player_name = 'bot'
-            pressed = pygame.mouse.get_pressed()
-            if pressed[0]:  # '''нажата ЛКМ - событие связано с бомбой'''
-                if player_name != 'bot':
-                    #player_name.catch(x, y)
-                    continue
-                else:
-                    dr_bomb(x,y)
-                    #player_name.bomb(x, y)
-            if pressed[2]:  # '''нажата ПКМ - событие связано с полем'''
-                if player_name == 'player':
-                    #player_name.repair(x, y)
-                    continue
+                for i in range(17):
+                    for j in range(17):
+                        k = i - 8
+                        n = j - 8
+                        if (k*k + n*n <= 64):
+                            del_bomb(x+k, y+n)
+                repair(x, y, 1)
 
-    draw(time )
+            pressed = pygame.mouse.get_pressed()
+
+    draw(time)
     #draw_field_lines(screen)
     pygame.display.update()
     #screen.fill(test)
@@ -53,4 +62,4 @@ pygame.quit()
 
 
 
-            
+

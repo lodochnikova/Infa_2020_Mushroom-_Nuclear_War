@@ -21,10 +21,10 @@ from CONST import *
 time = 0
 screen = pygame.display.set_mode((width, height))
 damage = []
-for i in range(width):
+for i in range(width+1):
     damage.append([])
-    for j in range(height):
-        damage[i].append((i+j)/(width+height))
+    for j in range(height+1):
+        damage[i].append(0)
 bomb_time = []
 bomb_x = []
 bomb_y = []
@@ -94,10 +94,13 @@ def del_bomb(x, y):
             if (bomb_y[i]==y):
                 k = i
                 break
-    del bomb_x[k]
-    del bomb_y[k]
-    del bomb_time[k]
-    bomb_count -= 1
+    if (k==0.5):
+        k = 0.5
+    else:
+        del bomb_x[k]
+        del bomb_y[k]
+        del bomb_time[k]
+        bomb_count -= 1
 
 def bomb_color(t):
     r = int(t/boom * 255)
@@ -115,6 +118,63 @@ def draw_bomb(i):
     circle (screen, color, (x, y), radius, 0)
     if (dt >= boom):
         circle (screen, (255, 255, 0), (x, y), blast_radius, 0)
+        upd_dam(x, y)
+
+def find_bomb_x():
+    global bomb_count
+    for i in range(bomb_count):
+        x = bomb_x[i]
+        y = bomb_y[i]
+        if (what_field_is(x, y) == 2):
+            return (x)
+
+def find_bomb_y():
+    global bomb_count
+    for i in range(bomb_count):
+        x = bomb_x[i]
+        y = bomb_y[i]
+        if (what_field_is(x, y) == 2):
+            return (y)
+
+def upd_dam(x, y):
+    R = 20
+    x0 = x - x%10
+    y0 = y - y%10
+    for i in range(13):
+        for j in range(13):
+            k = i - 6
+            n = j - 6
+            if (k*k + n*n <= 36):
+                x1 = x0 + k * 10
+                y1 = y0 + n * 10
+                r = ((x1 - x) ** 2 + (y1 - y) ** 2) ** 0.5
+                if ((x1 >= 0) and (x1 <= 800)):
+                    if ((y1 >= 0) and (y1 <= 600)):
+                        damage[x1][y1] += (1 - damage[x1][y1]) * (R / (r + R))
+
+def repair(x, y, p): #p = 1 - игрок, p = 2 - бот
+    x0 = x - x%10
+    y0 = y - y%10
+    for i in range(7):
+        for j in range(7):
+            k = i - 3
+            n = j - 3
+            if (k*k + n*n <= 9):
+                x1 = x0 + k * 10
+                y1 = y0 + n * 10
+                if ((x1 >= 0) and (x1 <= 800)):
+                    if ((y1 >= 0) and (y1 <= 600)):
+                        if (what_field_is(x1, y1) == p):
+                            damage[x1][y1] = 0
+
+def Health_Points():
+    s = 0
+    for i in range (width//10 + 1):
+        for j in range (height//10 + 1):
+            if (what_field_is(i*10, j*10) == 2):
+                s += damage[i*10][j*10]
+    return 1-200*s/width/height
+
 
 def boom_check(i):
     global bomb_time, time, boom, bomb_del
