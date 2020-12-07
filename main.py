@@ -11,9 +11,10 @@ f(x, y) = k + (1-k) * (R/(r+R))
 
 
 import pygame
-from drawing_module import dr_bomb, draw, del_bomb, repair
+from drawing_module import dr_bomb, draw, del_bomb, repair, Health_Points, Health_Points_Bot
 from field import *
 from bot import bot_act
+from Ending import Bot_Win, Player_Win
 
 
 
@@ -30,6 +31,18 @@ finished = False
 while not finished:
     clock.tick(FPS)
     time += 1
+
+    hp = Health_Points()
+    hpb = Health_Points_Bot()
+    print(hp, hpb)
+    if (hp < 0.4):
+        Bot_Win()
+        finished = True
+
+    if (hpb < 0.4):
+        Player_Win()
+        finished = True
+
     bot_act(time)
 
     for event in pygame.event.get():

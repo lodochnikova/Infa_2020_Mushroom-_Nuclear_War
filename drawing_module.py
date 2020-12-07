@@ -171,10 +171,17 @@ def Health_Points():
     s = 0
     for i in range (width//10 + 1):
         for j in range (height//10 + 1):
-            if (what_field_is(i*10, j*10) == 2):
+            if (what_field_is(i*10, j*10) == 1):
                 s += damage[i*10][j*10]
     return 1-200*s/width/height
 
+def Health_Points_Bot():
+    s = 0
+    for i in range (width//10 + 1):
+        for j in range (height//10 + 1):
+            if (what_field_is(i*10, j*10) == 2):
+                s += damage[i*10][j*10]
+    return 1-200*s/width/height
 
 def boom_check(i):
     global bomb_time, time, boom, bomb_del

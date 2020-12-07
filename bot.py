@@ -2,7 +2,7 @@
 from field import what_field_is
 from math import ceil
 from random import *
-from drawing_module import dr_bomb, Health_Points, repair, find_bomb_x, find_bomb_y, del_bomb
+from drawing_module import dr_bomb, Health_Points_Bot, repair, find_bomb_x, find_bomb_y, del_bomb
 
 #player 1 - игрок, player 2 - бот
 bomb_x = []
@@ -40,8 +40,7 @@ def bot_repair():
 
 #когда что делать t - время в кадрах, hp - доля от полного здоровья бота
 def bot_act(t):
-    hp = Health_Points()
-    print(hp)
+    hp = Health_Points_Bot()
     period = 6 / (abs(hp) + 0.1)
     per = ceil (period)
     if (t % per == 0):
